@@ -68,6 +68,7 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
     public boolean potHoleFound() {
         return potholeHit;
     }
+    public void setPotholeFound(boolean found) {potholeHit = found;}
     public void reset() {
         potholeHit = false;
     }

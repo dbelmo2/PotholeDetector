@@ -31,6 +31,12 @@ public class Search extends Thread {
 
             while (true) {
 
+                gps.requestLoc();
+                Coordinate current = new Coordinate(gps.getLatitude(), gps.getLongitude());
+                if(database.checkCoordinate(current)) {
+                    mediaPlayer.start();
+                }
+
                 if(accelerometer.potHoleFound()) {
                     gps.requestLoc();
                     pLat = gps.getLatitude();
