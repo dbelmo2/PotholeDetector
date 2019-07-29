@@ -1,4 +1,4 @@
-package com.example.myfirst;
+package com.example.myfirst.android.app;
 
 import android.Manifest;
 import android.app.Activity;
@@ -24,7 +24,7 @@ public class GPS {
     Activity activity;
     private double latitude, longitude;
 
-    GPS(Context con, Activity activity, TextView resultsText) {
+    public GPS(Context con, Activity activity) {
         this.context = con;
         this.activity = activity;
 
@@ -35,7 +35,6 @@ public class GPS {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-              //  resultsText.append("\n" + location.getLatitude() + " " + location.getLongitude());
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
 
@@ -83,11 +82,9 @@ public class GPS {
 
     }
 
+    // updates the latitude and longitude values inside the GPS.java class
     public void requestLoc() {
-
         locationManager.requestLocationUpdates("gps", 5000, 5, locationListener);
-
-
 
     }
 
