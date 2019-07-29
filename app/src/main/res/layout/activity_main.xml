@@ -5,10 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/app1"
+
 >
-
-
 
     <TextView
         android:id="@+id/results"
@@ -49,8 +47,6 @@
         android:id="@+id/image"
         android:layout_width="408dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/app2"
-        android:src="@drawable/app2"
         android:visibility="visible"
         tools:layout_editor_absoluteX="443dp"
         tools:layout_editor_absoluteY="0dp" />
@@ -62,7 +58,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:textColor = "#FFFFFF"
+        android:textColor = "#000000"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -84,7 +80,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="0000"
-        android:textColor = "#FFFFFF"
+        android:textColor = "#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

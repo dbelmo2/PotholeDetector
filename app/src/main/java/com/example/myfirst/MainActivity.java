@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         gps.gpsSstup();
         database = new DataBaseHelper(this);
         accelerometer = new Accelerometer(this);
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+        //mediaPlayer = MediaPlayer.create(this, R.raw.beep);
         search = new Search(database, gps, accelerometer, mediaPlayer);
 
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         search.start();
 
         // setup the background image
-        mainBackground.setImageResource(R.drawable.app2);
+        //mainBackground.setImageResource(R.drawable.app2);
 
         // setting up the location manager
 

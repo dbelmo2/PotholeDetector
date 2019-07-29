@@ -37,7 +37,7 @@ public class Search extends Thread {
                     pLong = gps.getLongitude();
                     recordLocation(pLat, pLong);
                     accelerometer.reset();
-                    mediaPlayer.start();
+                    //mediaPlayer.start();
                     sleep(5000);
 
                 }
