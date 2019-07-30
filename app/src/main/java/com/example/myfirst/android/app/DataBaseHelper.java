@@ -16,7 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     // Database Info
     private static final String DATABASE_NAME = "coordinateDatabase";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Table names
     private static final String TABLE_COORDINATES = "coordinates";
@@ -109,7 +109,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // Find latitude within range of 100 feet of current coordinate
         // https://sciencing.com/convert-latitude-longtitude-feet-2724.html
         final int formulaConst = 364320;
-        final double threshold = 100 / formulaConst;
+        final double threshold = 100.0 / formulaConst;
         double LAT_MIN = coordinate.latitude - threshold;
         double LAT_MAX = coordinate.latitude + threshold;
         double LONG_MIN = coordinate.longitude - threshold;
@@ -117,14 +117,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         String COORDINATES_SELECT_QUERY =
                 String.format("SELECT * FROM %s " +
-                                "WHERE %s >= %s " +
-                                "BETWEEN %s <= %s ",
+                                "WHERE %s BETWEEN %s AND %s ",
                         TABLE_COORDINATES,
                         KEY_LATITUDE, LAT_MIN,
-                        KEY_LATITUDE, LAT_MAX);
+                        LAT_MAX);
 
         // get readable and write-able objects unless low-disk space scenarios
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(COORDINATES_SELECT_QUERY, null);
 
         try {
@@ -132,23 +131,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
                 // Get the registered pothole from the database with a latitude
                 // that's in range and then make sure the longitude's are the same as well
-                Coordinate potholeCoordinate = new Coordinate(cursor.getColumnIndex(KEY_LATITUDE), cursor.getColumnIndex(KEY_LONGITUDE));
+                Coordinate potholeCoordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2));
 
                 // Function call to compare the two double values for latitude
                 // If a match is found then check the corresponding item
-                if (Double.compare(potholeCoordinate.latitude, coordinate.latitude) == 0) {
+
 
 
                     if(LONG_MIN <= potholeCoordinate.longitude || potholeCoordinate.longitude >= LONG_MAX) {
                         return true;
+
                     }
-                    else {
-                        return false;
-                    }
-                }
-                else {
-                    return false;
-                }
 
             }
         } catch (Exception e) {
@@ -158,9 +151,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
-            return false;
         }
 
+        return false;
     }
 
 

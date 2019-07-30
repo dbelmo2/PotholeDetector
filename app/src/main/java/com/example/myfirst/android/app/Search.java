@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import com.example.myfirst.android.app.DataBaseHelper;
 import com.example.myfirst.android.app.GPS;
 
+import java.sql.SQLOutput;
+
 public class Search extends Thread {
     private double pLat, pLong;
     private DataBaseHelper database;
@@ -21,6 +23,7 @@ public class Search extends Thread {
         this.gps = gps;
         this.accelerometer = accelerometer;
         this.mediaPlayer = mediaPlayer;
+
     }
 
     /*main Search thread, continuously checks if
@@ -28,19 +31,22 @@ public class Search extends Thread {
     public void run() {
 
         try {
+            addCoordinate();
 
             while (true) {
 
                 gps.requestLoc();
                 Coordinate current = new Coordinate(gps.getLatitude(), gps.getLongitude());
+
+                System.out.println("Lat: " + gps.getLatitude() + "  Long: " + gps.getLongitude());
                 if(database.checkCoordinate(current)) {
                     mediaPlayer.start();
                 }
 
                 if(accelerometer.potHoleFound()) {
-                    gps.requestLoc();
                     pLat = gps.getLatitude();
                     pLong = gps.getLongitude();
+
                     recordLocation(pLat, pLong);
                     accelerometer.reset();
                     //mediaPlayer.start();
@@ -68,6 +74,10 @@ public class Search extends Thread {
     }
 
 
+    public void addCoordinate() {
+        Coordinate coordinate = new Coordinate(41.8505029,-87.9295232);
+        database.addCoordinate(coordinate);
+    }
 
 
 }

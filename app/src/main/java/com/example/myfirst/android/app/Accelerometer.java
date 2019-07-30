@@ -29,7 +29,7 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
         this. accelerometer = sensoryManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensoryManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         Log.d(TAG, "onCreate: Registered accelerometer listener");
-        thresh = 10.0F;
+        thresh = 100.0F;
     }
 
 
@@ -42,8 +42,8 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
     public void onSensorChanged(SensorEvent sensorEvent) {
         float zAxis = sensorEvent.values[2];
 
-        Log.d(TAG, "previous Z " + previousZ );
-        Log.d(TAG, "new Z " + zAxis);
+       // Log.d(TAG, "previous Z " + previousZ );
+        //Log.d(TAG, "new Z " + zAxis);
 
         float difference = Math.abs(previousZ - zAxis);
 
@@ -56,7 +56,7 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
         }
         else if (Float.compare(difference, thresh) < 0) {
 
-            System.out.println("Just a bump");
+            //System.out.println("Just a bump");
             potholeHit = false;
         }
 

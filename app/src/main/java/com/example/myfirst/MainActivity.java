@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         gps.gpsSstup();
         database = new DataBaseHelper(this);
         accelerometer = new Accelerometer(this);
-        //mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+        mediaPlayer = MediaPlayer.create(this, R.raw.alert);
         search = new Search(database, gps, accelerometer, mediaPlayer);
 
 
@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
         threshold = findViewById(R.id.thresh);
         viewData = findViewById(R.id.viewData);
         updateThresh = findViewById(R.id.update);
+
+        //CLEAR DATABASE FOR TESTING PURPOSES
+        clearData();
+
+
         search.start();
 
         // setup the background image
@@ -92,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
                             while( res.moveToNext()) {
                                 buffer.append("ID :" + res.getString(0) + "\n");
-                                buffer.append("DATA :" + res.getString(1) + "\n");
-                                buffer.append(("DATA2 : " + res.getString(2) + "\n"));
+                                buffer.append("DATA :" + res.getDouble(1) + "\n");
+                                buffer.append(("DATA2 : " + res.getDouble(2) + "\n"));
                             }
 
                             showMessage("dData", buffer.toString());
