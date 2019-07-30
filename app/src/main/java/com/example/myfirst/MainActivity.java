@@ -18,6 +18,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.myfirst.android.app.Accelerometer;
+import com.example.myfirst.android.app.Coordinate;
 import com.example.myfirst.android.app.DataBaseHelper;
 import com.example.myfirst.android.app.GPS;
 import com.example.myfirst.android.app.Search;
@@ -26,7 +27,7 @@ import com.example.myfirst.android.app.Search;
 public class MainActivity extends AppCompatActivity {
 
     private LocationListener locationListener;
-    private Button viewData, start, updateThresh;
+    private Button viewData, start, updateThresh, addCoordinate;
     private TextView threshText;
     private SeekBar seekBar;
     private LocationManager locationManager;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private DataBaseHelper database;
     private Search search;
     private MediaPlayer mediaPlayer;
-    private EditText threshold;
+    private EditText threshold, latInput, longInput;
 
 
 
@@ -61,7 +62,12 @@ public class MainActivity extends AppCompatActivity {
         start = findViewById(R.id.Startbutton);
         threshold = findViewById(R.id.thresh);
         viewData = findViewById(R.id.viewData);
+        latInput = findViewById(R.id.lat_input);
+        longInput = findViewById(R.id.long_input);
         updateThresh = findViewById(R.id.update);
+        addCoordinate = findViewById(R.id.add_coordinate);
+
+
 
         //CLEAR DATABASE FOR TESTING PURPOSES
         clearData();
@@ -145,6 +151,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        });
+        addCoordinate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View V) {
+                double data1 = Double.valueOf(latInput.getText().toString());
+                double data2 = Double.valueOf(longInput.getText().toString());
+                Coordinate coordinate = new Coordinate(data1,data2);
+                database.addCoordinate(coordinate);
+            }
         });
 
 
