@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.myfirst.R;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class ListDataActivity extends AppCompatActivity {
 
     private static final String TAG = "ListDataAcivity";
+    private Coordinate coordinate;
     DataBaseHelper dataBaseHelper;
     private ListView listView;
     @Override
@@ -33,9 +35,15 @@ public class ListDataActivity extends AppCompatActivity {
     private void fillList() {
 
         Cursor cursor = ;
+        int numRows = cursor.getCount();
         ArrayList<String> dataList = new ArrayList<>();
-        while(cursor.moveToNext()) {
-            dataList.add(cursor.getString(0));
+        if(numRows == 0) {
+            Toast.makeText(ListDataActivity.this, "Database is empty!", Toast.LENGTH_LONG).show();
+        } else {
+
+            while(cursor.moveToNext()) {
+                dataList.add(cursor.getString(0));
+            }
         }
 
         ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cursor);
