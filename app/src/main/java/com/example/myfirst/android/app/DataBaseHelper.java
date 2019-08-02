@@ -170,4 +170,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return res;
 
     }
+
+    /*public Integer deleteData(String id) {
+
+    }*/
 }

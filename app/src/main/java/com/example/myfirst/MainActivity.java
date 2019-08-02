@@ -1,6 +1,7 @@
 package com.example.myfirst;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -92,23 +93,8 @@ public class MainActivity extends AppCompatActivity {
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Cursor res = database.getAllData();
-
-                        if(res.getCount() == 0) {
-                            // show error
-                            return;
-                        }
-                        else {
-                            StringBuffer buffer = new StringBuffer();
-
-                            while( res.moveToNext()) {
-                                buffer.append("ID :" + res.getString(0) + "\n");
-                                buffer.append("DATA :" + res.getDouble(1) + "\n");
-                                buffer.append(("DATA2 : " + res.getDouble(2) + "\n"));
-                            }
-
-                            showMessage("dData", buffer.toString());
-                        }
+                       Intent intent = new Intent(MainActivity.this, ListDataActivity.class);
+                       startActivity(intent);
                     }
                 }
         );
