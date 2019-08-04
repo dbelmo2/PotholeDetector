@@ -26,27 +26,29 @@ public class ListDataActivity extends AppCompatActivity {
         setContentView(R.layout.list_layout);
         listView = (ListView) findViewById(R.id.listView);
 
-        fillList();
+        dataBaseHelper = new DataBaseHelper(this);
+        fillList(dataBaseHelper.getAllData());
 
 
 
     }
 
-    private void fillList() {
+    private void fillList(Cursor mCursor) {
 
-        Cursor cursor = ;
+        Cursor cursor = mCursor;
         int numRows = cursor.getCount();
-        ArrayList<String> dataList = new ArrayList<>();
+        ArrayList<Coordinate> coordinateList = new ArrayList<>();
         if(numRows == 0) {
             Toast.makeText(ListDataActivity.this, "Database is empty!", Toast.LENGTH_LONG).show();
         } else {
 
             while(cursor.moveToNext()) {
-                dataList.add(cursor.getString(0));
+                coordinate = new Coordinate(cursor.getInt(0),cursor.getDouble(1),cursor.getDouble(2));
+                coordinateList.add(coordinate);
             }
         }
 
-        ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cursor);
+        Three_column_adapter listAdapter = new Three_column_adapter(this, R.layout.list_adapter_view, coordinateList);
         listView.setAdapter(listAdapter);
 
 
