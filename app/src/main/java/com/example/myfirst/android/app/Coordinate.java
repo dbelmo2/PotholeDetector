@@ -18,4 +18,8 @@ public class Coordinate {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public int getId() {
+        return this.id;
+    }
 }

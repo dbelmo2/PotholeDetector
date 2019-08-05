@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myfirst.R;
 
@@ -49,11 +50,9 @@ public class Three_column_adapter extends ArrayAdapter<Coordinate> {
 
             }
 
-
-
-
         }
 
         return convertView;
     }
+
 }

@@ -171,7 +171,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    /*public Integer deleteData(String id) {
+    public void deleteData(int id) {
 
-    }*/
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "  + TABLE_COORDINATES + " WHERE " + KEY_COORDINATE_ID + " = '" + id + "'";
+        db.execSQL(query);
+
+
+    }
 }
