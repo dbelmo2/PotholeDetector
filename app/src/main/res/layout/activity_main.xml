@@ -42,6 +42,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/thresh" />
 
+    <Button
+        android:id="@+id/SettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="8dp"
+        android:icon="@drawable/ic_setting"
+        android:text="Settings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thresh" />
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="408dp"
@@ -76,10 +87,10 @@
         android:id="@+id/threshText"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="60dp"
         android:text="0000"
-        android:textColor = "#000000"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
