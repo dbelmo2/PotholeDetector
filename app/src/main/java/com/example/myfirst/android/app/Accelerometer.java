@@ -76,5 +76,5 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
     public void setTresh(float thresh) {
         this.thresh = (float) thresh;
     }
-
+    public float getThresh() { return thresh; }
 }

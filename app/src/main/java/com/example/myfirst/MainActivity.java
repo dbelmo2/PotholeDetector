@@ -8,6 +8,8 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.QuickContactBadge;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.view.Menu;
 
 import com.example.myfirst.android.app.Accelerometer;
 import com.example.myfirst.android.app.Coordinate;
@@ -25,11 +28,13 @@ import com.example.myfirst.android.app.GPS;
 import com.example.myfirst.android.app.ListDataActivity;
 import com.example.myfirst.android.app.Search;
 
+import java.io.Serializable;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements Serializable {
 
     private LocationListener locationListener;
-    private Button viewData, start, updateThresh, addCoordinate;
+    private Button viewData, start, updateThresh, addCoordinate, settings;
     private TextView threshText;
     private SeekBar seekBar;
     private LocationManager locationManager;
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Search search;
     private MediaPlayer mediaPlayer;
     private EditText threshold, latInput, longInput;
+    private Toolbar toolbar;
 
 
 
@@ -58,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         search = new Search(database, gps, accelerometer, mediaPlayer);
 
 
-
         // get the button from the activity view, using the ID: rollButton
         threshText = findViewById(R.id.threshText);
         start = findViewById(R.id.Startbutton);
@@ -68,24 +73,51 @@ public class MainActivity extends AppCompatActivity {
         longInput = findViewById(R.id.long_input);
         updateThresh = findViewById(R.id.update);
         addCoordinate = findViewById(R.id.add_coordinate);
+        settings = (Button) findViewById(R.id.SettingsButton);
 
+        /* Adding event listener for SETTING button */
 
-
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSettingsActivity();
+            }
+        });
         //CLEAR DATABASE FOR TESTING PURPOSES
         clearData();
-
 
         search.start();
 
         // setup the background image
         //mainBackground.setImageResource(R.drawable.app2);
-
         // setting up the location manager
-
-
         configureButton();
         viewAll();
 
+        // Check for threshold change
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                //do nothing
+            } else {
+                float temp = extras.getFloat("newThreshold");
+                accelerometer.setTresh(temp);
+                threshText.setText(Float.toString(accelerometer.getThresh()));
+            }
+        } else {
+            accelerometer.setTresh((Float) savedInstanceState.getSerializable("newThreshold"));
+            threshText.setText(Float.toString(accelerometer.getThresh()));
+        }
+
+
+    }
+
+    /* Method that calls the settings menu screen when button is clicked on */
+
+    public void openSettingsActivity() {
+        Intent intent = new Intent(this, Activity2.class);
+        intent.putExtra("accelerometerValue", 40);
+        startActivity(intent);
     }
 
     // method which setups the view button
@@ -164,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
 
 }
