@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">myFirst</string>
+    <string name="test_string"><b>Your current threshold is 0.00 m/s<sup>2</sup> \n Enter a new threshold in the settings</b>
+    </string>
+    <string name="unitofmeasurement"> <b>m/s<sup>2</sup></b> </string>
+
 </resources>

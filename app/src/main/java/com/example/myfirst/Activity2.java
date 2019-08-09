@@ -36,8 +36,6 @@ public class Activity2 extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
 
-        getSupportActionBar().setTitle("Settings");
-
         /* add event listener for enter button in threshold setting */
 
         Button enter = (Button) findViewById(R.id.enter);
@@ -47,8 +45,6 @@ public class Activity2 extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View v) {
 
-                TextView mText = (TextView) findViewById(R.id.textView1);
-                mText.setText(userInput.getText().toString());
                 String thresholdStr = userInput.getText().toString();
                 Float threshold = Float.valueOf(thresholdStr);
                 Intent intent = new Intent(Activity2.this, MainActivity.class);

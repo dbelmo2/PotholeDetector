@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,20 +35,14 @@ import java.io.Serializable;
 public class MainActivity extends AppCompatActivity implements Serializable {
 
     private LocationListener locationListener;
-    private Button viewData, start, updateThresh, addCoordinate, settings;
+    private Button viewData, start, addCoordinate, settings;
     private TextView threshText;
-    private SeekBar seekBar;
-    private LocationManager locationManager;
     private GPS gps;
     private Accelerometer accelerometer;
-    private boolean mLocationPermissionGranted;
     private DataBaseHelper database;
     private Search search;
     private MediaPlayer mediaPlayer;
-    private EditText threshold, latInput, longInput;
-    private Toolbar toolbar;
-
-
+    private EditText latInput, longInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +62,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         // get the button from the activity view, using the ID: rollButton
         threshText = findViewById(R.id.threshText);
         start = findViewById(R.id.Startbutton);
-        threshold = findViewById(R.id.thresh);
         viewData = findViewById(R.id.viewData);
         latInput = findViewById(R.id.lat_input);
         longInput = findViewById(R.id.long_input);
-        updateThresh = findViewById(R.id.update);
         addCoordinate = findViewById(R.id.add_coordinate);
         settings = (Button) findViewById(R.id.SettingsButton);
 
@@ -91,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         // setup the background image
         //mainBackground.setImageResource(R.drawable.app2);
         // setting up the location manager
-        configureButton();
         viewAll();
 
         // Check for threshold change
@@ -102,11 +94,12 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             } else {
                 float temp = extras.getFloat("newThreshold");
                 accelerometer.setTresh(temp);
-                threshText.setText(Float.toString(accelerometer.getThresh()));
+                threshText.setText("Your current threshold is " + temp + "m/s²");
             }
         } else {
-            accelerometer.setTresh((Float) savedInstanceState.getSerializable("newThreshold"));
-            threshText.setText(Float.toString(accelerometer.getThresh()));
+            float temp = (Float) savedInstanceState.getSerializable("newThreshold");
+            accelerometer.setTresh(temp);
+            threshText.setText("Your current threshold is " + temp + "m/s²");
         }
 
 
@@ -155,47 +148,4 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         gps.onResults(requestCode, permissions, grantResults);
     }
-
-    private void configureButton() {
-
-        updateThresh.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                float data = Float.valueOf(threshold.getText().toString());
-                accelerometer.setTresh(data);
-                threshText.setText(threshold.getText());
-            }
-
-
-
-        });
-        addCoordinate.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View V) {
-                double data1 = Double.valueOf(latInput.getText().toString());
-                double data2 = Double.valueOf(longInput.getText().toString());
-                Coordinate coordinate = new Coordinate(data1,data2);
-                database.addCoordinate(coordinate);
-            }
-        });
-
-
-
-        start.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearData();
-
-            }
-        }
-        );
-
-
-
-
-    }
-
-
 }
