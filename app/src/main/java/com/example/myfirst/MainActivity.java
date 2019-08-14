@@ -61,12 +61,11 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         // get the button from the activity view, using the ID: rollButton
         threshText = findViewById(R.id.threshText);
-        start = findViewById(R.id.Startbutton);
         viewData = findViewById(R.id.viewData);
         latInput = findViewById(R.id.lat_input);
         longInput = findViewById(R.id.long_input);
         addCoordinate = findViewById(R.id.add_coordinate);
-        settings = (Button) findViewById(R.id.SettingsButton);
+        settings =  findViewById(R.id.SettingsButton);
 
         /* Adding event listener for SETTING button */
 
@@ -77,7 +76,17 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             }
         });
         //CLEAR DATABASE FOR TESTING PURPOSES
-        clearData();
+
+
+        addCoordinate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View V) {
+                double data1 = Double.valueOf(latInput.getText().toString());
+                double data2 = Double.valueOf(longInput.getText().toString());
+                Coordinate coordinate = new Coordinate(data1,data2);
+                database.addCoordinate(coordinate);
+            }
+        });
 
         search.start();
 
@@ -126,14 +135,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         );
     }
 
-    public void clearData() {
 
-        try {
-        database.clearData(); }
-        catch(Exception R) {
-            R.printStackTrace();
-        }
-    }
 
     //method called to display the database results in a popup window
     public void showMessage(String title, String message) {

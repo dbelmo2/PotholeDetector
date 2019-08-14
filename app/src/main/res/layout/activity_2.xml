@@ -43,7 +43,16 @@
         android:text="Enter"
         android:textColor="#FFFFFF" />
 
-
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enter"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="22dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="Clear Database" />
 
 
 </RelativeLayout>

@@ -31,6 +31,9 @@ import java.io.Serializable;
 
 public class Activity2 extends AppCompatActivity implements Serializable {
 
+    Button clear;
+    DataBaseHelper dataBaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,9 @@ public class Activity2 extends AppCompatActivity implements Serializable {
         /* add event listener for enter button in threshold setting */
 
         Button enter = (Button) findViewById(R.id.enter);
+        Button clear = findViewById(R.id.clearButton);
+
+        dataBaseHelper = new DataBaseHelper(this);
         final EditText userInput = (EditText) findViewById(R.id.userInput);
         enter.setOnClickListener(new View.OnClickListener() {
 
@@ -53,5 +59,24 @@ public class Activity2 extends AppCompatActivity implements Serializable {
             }
 
         });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearData();
+            }
+        });
+
+
+
+    }
+
+    public void clearData() {
+
+        try {
+            dataBaseHelper.clearData(); }
+        catch(Exception R) {
+            R.printStackTrace();
+        }
     }
 }
