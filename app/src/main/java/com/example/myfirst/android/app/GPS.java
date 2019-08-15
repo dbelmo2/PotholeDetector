@@ -30,7 +30,7 @@ public class GPS {
 
 
     }
-    public void gpsSstup() {
+    public void gpsSetup() {
         locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override

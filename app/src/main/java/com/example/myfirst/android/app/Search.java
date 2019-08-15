@@ -31,7 +31,7 @@ public class Search extends Thread {
     public void run() {
 
         try {
-            addCoordinate();
+
 
             while (true) {
 
@@ -44,6 +44,7 @@ public class Search extends Thread {
                 }
 
                 if(accelerometer.potHoleFound()) {
+                    gps.requestLoc();
                     pLat = gps.getLatitude();
                     pLong = gps.getLongitude();
 
@@ -74,10 +75,7 @@ public class Search extends Thread {
     }
 
 
-    public void addCoordinate() {
-        Coordinate coordinate = new Coordinate(41.8505029,-87.9295232);
-        database.addCoordinate(coordinate);
-    }
+
 
 
 }

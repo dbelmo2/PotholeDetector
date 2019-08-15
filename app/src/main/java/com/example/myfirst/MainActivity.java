@@ -7,6 +7,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -31,19 +32,24 @@ import com.example.myfirst.android.app.Search;
 
 import java.io.Serializable;
 
+import pl.bclogic.pulsator4droid.library.PulsatorLayout;
+
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
     private LocationListener locationListener;
     private Button viewData, start, addCoordinate, settings;
-    private TextView threshText;
+    private TextView timerView;
     private GPS gps;
     private Accelerometer accelerometer;
     private DataBaseHelper database;
     private Search search;
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer, timerSoundPlayer;
     private EditText latInput, longInput;
-
+    private PulsatorLayout pulsatorLayout;
+    private CountDownTimer countDownTimer;
+    private Boolean timerRunning;
+    private long timeLeft = 3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -52,27 +58,45 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         final ImageView mainBackground = (ImageView)findViewById(R.id.image);
         gps = new GPS(this, this);
-        gps.gpsSstup();
+        gps.gpsSetup();
         database = new DataBaseHelper(this);
         accelerometer = new Accelerometer(this);
         mediaPlayer = MediaPlayer.create(this, R.raw.alert);
         search = new Search(database, gps, accelerometer, mediaPlayer);
+        pulsatorLayout = (PulsatorLayout)findViewById(R.id.pulsator);
+        timerSoundPlayer = MediaPlayer.create(this,R.raw.timer_tone);
+
+
+
+
+
 
 
         // get the button from the activity view, using the ID: rollButton
-        threshText = findViewById(R.id.threshText);
+
+        start = findViewById(R.id.startSearch);
         viewData = findViewById(R.id.viewData);
         latInput = findViewById(R.id.lat_input);
         longInput = findViewById(R.id.long_input);
         addCoordinate = findViewById(R.id.add_coordinate);
         settings =  findViewById(R.id.SettingsButton);
-
+        timerView = findViewById(R.id.timer_view);
+        timerView.setVisibility(View.INVISIBLE);
         /* Adding event listener for SETTING button */
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openSettingsActivity();
+            }
+        });
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start.setEnabled(false);
+                startTimer();
+                timerView.setVisibility(View.VISIBLE);
+
             }
         });
         //CLEAR DATABASE FOR TESTING PURPOSES
@@ -88,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             }
         });
 
-        search.start();
+
 
         // setup the background image
         //mainBackground.setImageResource(R.drawable.app2);
@@ -103,12 +127,14 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             } else {
                 float temp = extras.getFloat("newThreshold");
                 accelerometer.setTresh(temp);
-                threshText.setText("Your current threshold is " + temp + "m/s²");
+
             }
         } else {
-            float temp = (Float) savedInstanceState.getSerializable("newThreshold");
-            accelerometer.setTresh(temp);
-            threshText.setText("Your current threshold is " + temp + "m/s²");
+            if(savedInstanceState.getSerializable("newThreshold") != null) {
+                float temp = (Float) savedInstanceState.getSerializable("newThreshold");
+                accelerometer.setTresh(temp);
+
+            }
         }
 
 
@@ -118,8 +144,40 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     public void openSettingsActivity() {
         Intent intent = new Intent(this, Activity2.class);
-        intent.putExtra("accelerometerValue", 40);
+        intent.putExtra("accelerometerValue", accelerometer.getThresh());
         startActivity(intent);
+    }
+
+    // function to start timer
+    public void startTimer(){
+        countDownTimer = new CountDownTimer(timeLeft,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeft = millisUntilFinished;
+                updateTimer();
+                timerSoundPlayer.start();
+            }
+
+            @Override
+            public void onFinish() {
+                pulsatorLayout.start();
+                timerRunning = false;
+                timerView.setVisibility(View.INVISIBLE);
+                search.start();
+            }
+        }.start();
+        timerRunning = true;
+    }
+
+    //method to update the timer view
+    public void updateTimer() {
+        int seconds = (int) timeLeft % 60000 / 1000;
+
+        String timeLeftText;
+
+        timeLeftText = "" + seconds;
+        timerView.setText(timeLeftText);
+
     }
 
     // method which setups the view button

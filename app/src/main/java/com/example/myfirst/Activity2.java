@@ -33,16 +33,20 @@ public class Activity2 extends AppCompatActivity implements Serializable {
 
     Button clear;
     DataBaseHelper dataBaseHelper;
-
+    TextView treshText;
+    Accelerometer accelerometer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
-
         /* add event listener for enter button in threshold setting */
-
-        Button enter = (Button) findViewById(R.id.enter);
+        Bundle extras = getIntent().getExtras();
+        Button enter = findViewById(R.id.enter);
+        treshText = findViewById(R.id.thresh_text);
+        if(extras !=  null) {
+        treshText.setText("current: " + extras.getFloat("accelerometerValue")); }
         Button clear = findViewById(R.id.clearButton);
+
 
         dataBaseHelper = new DataBaseHelper(this);
         final EditText userInput = (EditText) findViewById(R.id.userInput);
@@ -50,11 +54,11 @@ public class Activity2 extends AppCompatActivity implements Serializable {
 
             @Override
             public void onClick(View v) {
-
                 String thresholdStr = userInput.getText().toString();
                 Float threshold = Float.valueOf(thresholdStr);
                 Intent intent = new Intent(Activity2.this, MainActivity.class);
                 intent.putExtra("newThreshold", threshold);
+                treshText.setText("current: " + threshold);
                 startActivity(intent);
             }
 

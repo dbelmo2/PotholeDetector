@@ -23,13 +23,15 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
 
     public Accelerometer(Context context) {
 
+
+
         this.context = context;
         Log.d(TAG, "onCreate: Initializing Sensor Services");
         this.sensoryManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         this. accelerometer = sensoryManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensoryManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         Log.d(TAG, "onCreate: Registered accelerometer listener");
-        thresh = 100.0F;
+        thresh = 17.0F;
     }
 
 
@@ -74,7 +76,7 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
     }
 
     public void setTresh(float thresh) {
-        this.thresh = (float) thresh;
+        this.thresh =  thresh;
     }
     public float getThresh() { return thresh; }
 }
