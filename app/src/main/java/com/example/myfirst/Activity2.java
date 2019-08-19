@@ -7,19 +7,21 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
+
+
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.support.v7.app.AppCompatActivity;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.Menu;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfirst.android.app.Accelerometer;
 import com.example.myfirst.android.app.Coordinate;

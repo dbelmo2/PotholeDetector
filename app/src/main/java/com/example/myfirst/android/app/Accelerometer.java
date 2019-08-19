@@ -7,8 +7,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Accelerometer extends AppCompatActivity implements SensorEventListener {
     private static final String TAG = "MainActivity";

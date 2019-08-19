@@ -9,54 +9,40 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.concurrent.Executor;
 
 
 public class GPS {
 
-    private LocationListener locationListener;
-    private LocationManager locationManager;
     Context context;
     Activity activity;
     private double latitude, longitude;
+    private FusedLocationProviderClient fusedProvider;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
 
     public GPS(Context con, Activity activity) {
         this.context = con;
         this.activity = activity;
-
+        this.fusedProvider = LocationServices.getFusedLocationProviderClient(context);
 
     }
     public void gpsSetup() {
-        locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
 
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                context.startActivity(intent);
-
-            }
-        };
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions( activity,new String[]{
@@ -67,10 +53,13 @@ public class GPS {
             },10 );
             return;
         }else {
-            requestLoc();
-        }
-    }
+            buildLocationCallback();
+            buildLocationRequest();
 
+
+        }
+
+    }
 
     public void onResults(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch(requestCode) {
@@ -84,8 +73,8 @@ public class GPS {
 
     // updates the latitude and longitude values inside the GPS.java class
     public void requestLoc() {
-        locationManager.requestLocationUpdates("gps", 5000, 5, locationListener);
-
+        //locationManager.requestLocationUpdates("gps", 5000, 5, locationListener);
+            fusedProvider.requestLocationUpdates(locationRequest,locationCallback, Looper.getMainLooper());
     }
 
     public double getLatitude() {
@@ -97,5 +86,26 @@ public class GPS {
     }
 
 
+
+        public void buildLocationRequest() {
+            locationRequest = new LocationRequest();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(5000);
+            locationRequest.setFastestInterval(3000);
+            locationRequest.setSmallestDisplacement(10);
+        }
+
+        private void buildLocationCallback() {
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    for (Location location : locationResult.getLocations()) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                    }
+                }
+
+            };
+        }
 }
 

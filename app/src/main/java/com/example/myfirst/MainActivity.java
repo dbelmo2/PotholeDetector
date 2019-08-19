@@ -3,19 +3,20 @@ package com.example.myfirst;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
+
+
 import android.text.Html;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.support.v7.app.AppCompatActivity;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
@@ -23,19 +24,29 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.Menu;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myfirst.android.app.Accelerometer;
 import com.example.myfirst.android.app.Coordinate;
 import com.example.myfirst.android.app.DataBaseHelper;
 import com.example.myfirst.android.app.GPS;
 import com.example.myfirst.android.app.ListDataActivity;
 import com.example.myfirst.android.app.Search;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 
 import java.io.Serializable;
+
+
 
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 
 public class MainActivity extends AppCompatActivity implements Serializable {
+
 
     private LocationListener locationListener;
     private Button viewData, start, addCoordinate, settings;
@@ -48,7 +59,11 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private EditText latInput, longInput;
     private PulsatorLayout pulsatorLayout;
     private CountDownTimer countDownTimer;
+    private Location mLocation;
+    private FusedLocationProviderClient fusedProvider;
     private Boolean timerRunning;
+
+
     private long timeLeft = 3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +77,11 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         database = new DataBaseHelper(this);
         accelerometer = new Accelerometer(this);
         mediaPlayer = MediaPlayer.create(this, R.raw.alert);
+
         search = new Search(database, gps, accelerometer, mediaPlayer);
         pulsatorLayout = (PulsatorLayout)findViewById(R.id.pulsator);
         timerSoundPlayer = MediaPlayer.create(this,R.raw.timer_tone);
+
 
 
 
@@ -114,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
 
 
+
         // setup the background image
         //mainBackground.setImageResource(R.drawable.app2);
         // setting up the location manager
@@ -147,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         intent.putExtra("accelerometerValue", accelerometer.getThresh());
         startActivity(intent);
     }
+
 
     // function to start timer
     public void startTimer(){
@@ -192,6 +211,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 }
         );
     }
+
+
 
 
 
