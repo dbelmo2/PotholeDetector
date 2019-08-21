@@ -45,8 +45,6 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
     public void onSensorChanged(SensorEvent sensorEvent) {
         float zAxis = sensorEvent.values[2];
 
-       // Log.d(TAG, "previous Z " + previousZ );
-        //Log.d(TAG, "new Z " + zAxis);
 
         float difference = Math.abs(previousZ - zAxis);
 

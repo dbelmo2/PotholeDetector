@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.myfirst"
-    >
+    package="com.example.myfirst">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,8 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-
-        <activity android:name=".Activity2"></activity>
+        <activity android:name=".PotholeMap"></activity>
+        <activity android:name=".Activity2" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +23,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.google.android.gms.version"
+
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <activity android:name=".android.app.ListDataActivity"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDPYzOzWieSgWk2IDykXSF_3I2fe7ei7OM" />
+
+        <activity android:name=".android.app.ListDataActivity" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <receiver android:name=".GeofenceBroadcastReceiver" />
     </application>
 
 </manifest>

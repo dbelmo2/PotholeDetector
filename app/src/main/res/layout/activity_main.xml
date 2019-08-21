@@ -8,15 +8,18 @@
 
     <pl.bclogic.pulsator4droid.library.PulsatorLayout
         android:id="@+id/pulsator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:pulse_color="#92DFF3"
         app:pulse_count="4"
         app:pulse_duration="3500"
-        app:pulse_repeat="0"
-        app:pulse_color="#92DFF3"
-        app:pulse_startFromScratch="true"
         app:pulse_interpolator="Linear"
-        >
+        app:pulse_repeat="0"
+        app:pulse_startFromScratch="true">
 
         <ImageView
             android:id="@+id/earth_view"
@@ -88,6 +91,19 @@
         app:layout_constraintStart_toEndOf="@+id/viewData"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/MapButton"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/capsule"
+        android:backgroundTint="#2207F8"
+        android:text="Map"
+        app:layout_constraintBottom_toTopOf="@+id/add_coordinate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lat_input" />
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="408dp"
@@ -103,10 +119,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="39dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="numberDecimal|numberSigned"
         app:layout_constraintBottom_toTopOf="@+id/long_input"
+        app:layout_constraintEnd_toStartOf="@+id/MapButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -131,8 +149,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/long_input" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

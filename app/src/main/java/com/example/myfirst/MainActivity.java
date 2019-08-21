@@ -12,6 +12,7 @@ import android.os.CountDownTimer;
 
 
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.view.Menu;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfirst.android.app.Accelerometer;
@@ -33,6 +35,8 @@ import com.example.myfirst.android.app.DataBaseHelper;
 import com.example.myfirst.android.app.GPS;
 import com.example.myfirst.android.app.ListDataActivity;
 import com.example.myfirst.android.app.Search;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,11 +49,15 @@ import java.io.Serializable;
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 
-public class MainActivity extends AppCompatActivity implements Serializable {
+public class MainActivity extends AppCompatActivity
+        implements
+        Serializable,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener
+{
 
-
-    private LocationListener locationListener;
-    private Button viewData, start, addCoordinate, settings;
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private Button viewData, start, addCoordinate, settings, mapButton;
     private TextView timerView;
     private GPS gps;
     private Accelerometer accelerometer;
@@ -59,12 +67,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private EditText latInput, longInput;
     private PulsatorLayout pulsatorLayout;
     private CountDownTimer countDownTimer;
-    private Location mLocation;
-    private FusedLocationProviderClient fusedProvider;
-    private Boolean timerRunning;
-
-
     private long timeLeft = 3000;
+    private GoogleApiClient googleApiClient;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -78,16 +84,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         accelerometer = new Accelerometer(this);
         mediaPlayer = MediaPlayer.create(this, R.raw.alert);
 
+
         search = new Search(database, gps, accelerometer, mediaPlayer);
         pulsatorLayout = (PulsatorLayout)findViewById(R.id.pulsator);
         timerSoundPlayer = MediaPlayer.create(this,R.raw.timer_tone);
-
-
-
-
-
-
-
 
         // get the button from the activity view, using the ID: rollButton
 
@@ -99,8 +99,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         settings =  findViewById(R.id.SettingsButton);
         timerView = findViewById(R.id.timer_view);
         timerView.setVisibility(View.INVISIBLE);
-        /* Adding event listener for SETTING button */
+        mapButton = findViewById(R.id.MapButton);
 
+        /* Adding event listener for SETTING button */
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,9 +117,14 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
             }
         });
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMapActivity();
+            }
+        });
         //CLEAR DATABASE FOR TESTING PURPOSES
-
-
         addCoordinate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View V) {
@@ -128,9 +134,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 database.addCoordinate(coordinate);
             }
         });
-
-
-
 
         // setup the background image
         //mainBackground.setImageResource(R.drawable.app2);
@@ -155,14 +158,73 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             }
         }
 
+        createGoogleApi();
 
     }
+
+    // Function to Create an instance of the GoogleAPIClient
+    private void createGoogleApi() {
+        Log.d(TAG, "createGoogleApi()");
+        if(googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+        else {
+            return;
+        }
+    }
+
+    // Abstract function #1 from GoogleApiClient to start
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Call GoogleApiClient connection when starting activity
+        googleApiClient.connect();
+    }
+
+    // Abstract function #2 from GoogleApiClient that runs when stopping activity
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // disconnecting
+        googleApiClient.disconnect();
+    }
+
+    // Abstract function for GoogleApiClient.ConnectionCallbacks used when its connected
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.i(TAG, "onConnected()");
+    }
+
+    // Abstract function used when GoogleApiClient.ConnectionCallBacks is disconnected
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.w(TAG, "onConnectionSuspended()");
+    }
+
+    //GoogleApiClient.OnConnectionFailedListener fail
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.w(TAG, "onConnection()");
+    }
+
 
     /* Method that calls the settings menu screen when button is clicked on */
 
     public void openSettingsActivity() {
         Intent intent = new Intent(this, Activity2.class);
         intent.putExtra("accelerometerValue", accelerometer.getThresh());
+        startActivity(intent);
+    }
+
+    // Method that starts the map activity
+    public void openMapActivity() {
+        Intent intent = new Intent(this, PotholeMap.class);
         startActivity(intent);
     }
 
@@ -180,12 +242,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             @Override
             public void onFinish() {
                 pulsatorLayout.start();
-                timerRunning = false;
                 timerView.setVisibility(View.INVISIBLE);
                 search.start();
             }
         }.start();
-        timerRunning = true;
     }
 
     //method to update the timer view
@@ -211,10 +271,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 }
         );
     }
-
-
-
-
 
     //method called to display the database results in a popup window
     public void showMessage(String title, String message) {
