@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="62dp"
+        android:text="Enter your desired threshold below:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#0099FF" />
+
+    <EditText
+        android:id="@+id/userInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_marginLeft="-275dp"
+        android:layout_marginBottom="-40dp"
+        android:layout_toRightOf="@+id/textView2"
+        android:background="#CCCCCC"
+        android:ems="10"
+        android:inputType="textPersonName">
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/enter"
+        android:layout_width="110dp"
+        android:layout_height="58dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="55dp"
+        android:background="@drawable/capsule"
+        android:backgroundTint="#03A9F4"
+        android:text="update"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="150dp"
+        android:layout_height="58dp"
+        android:layout_below="@+id/enter"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/capsule"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="Clear Database" />
+
+    <TextView
+        android:id="@+id/thresh_text"
+        android:layout_width="130dp"
+        android:layout_height="43dp"
+        android:layout_above="@+id/clearButton"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginEnd="157dp"
+        android:layout_marginBottom="12dp"
+        android:layout_toEndOf="@+id/enter"
+        android:text="current: 18"
+        android:textSize="15dp" />
+
+
+</RelativeLayout>
