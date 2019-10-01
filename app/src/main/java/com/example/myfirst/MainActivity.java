@@ -1,7 +1,9 @@
 package com.example.myfirst;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.QuickContactBadge;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.view.Menu;
 
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private LocationListener locationListener;
     private Button viewData, start, addCoordinate, settings, mapButton;
     private TextView timerView;
+    private Switch orientationSwitch;
     private GPS gps;
     private Accelerometer accelerometer;
     private DataBaseHelper database;
@@ -61,13 +65,15 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private CountDownTimer countDownTimer;
     private Location mLocation;
     private FusedLocationProviderClient fusedProvider;
-    private Boolean timerRunning;
+    private Boolean devModeOn,verticalModeOn, timerRunning;
+
 
 
     private long timeLeft = 3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        getprefences(findViewById(android.R.id.content));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -75,12 +81,14 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         gps = new GPS(this, this);
         gps.gpsSetup();
         database = new DataBaseHelper(this);
-        accelerometer = new Accelerometer(this);
+        accelerometer = new Accelerometer(this, verticalModeOn);
         mediaPlayer = MediaPlayer.create(this, R.raw.alert);
+        orientationSwitch = new Switch(this);
 
         search = new Search(database, gps, accelerometer, mediaPlayer);
         pulsatorLayout = (PulsatorLayout)findViewById(R.id.pulsator);
         timerSoundPlayer = MediaPlayer.create(this,R.raw.timer_tone);
+
 
 
         // get the button from the activity view, using the ID: rollButton
@@ -119,9 +127,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             }
         });
 
-        //CLEAR DATABASE FOR TESTING PURPOSES
-
-
         addCoordinate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View V) {
@@ -154,16 +159,18 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
             }
         }
-
-
+        //update dev gui and accelerometer setting based on shared pref
+        updateDevUI();
     }
 
     /* Method that calls the settings menu screen when button is clicked on */
 
     public void openSettingsActivity() {
         Intent intent = new Intent(this, Activity2.class);
-        intent.putExtra("accelerometerValue", accelerometer.getThresh());
-        startActivity(intent);
+        //Bundle bundle = new Bundle();
+        //bundle.putSerializable("accelerometer",(Serializable)accelerometer);
+       // intent.putExtras();
+        startActivityForResult(intent,1);
     }
 
     // Method that starts the map activity
@@ -219,21 +226,51 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         );
     }
 
-
-
-
-
-    //method called to display the database results in a popup window
-    public void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         gps.onResults(requestCode, permissions, grantResults);
     }
+
+    public void getprefences(View view) {
+        SharedPreferences sharedPreferences = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
+
+        verticalModeOn = sharedPreferences.getBoolean("verticalmode", false);
+        devModeOn = sharedPreferences.getBoolean("devmode", false);
+
+    }
+    public void updateDevUI() {
+        accelerometer.setOrientation(verticalModeOn);
+        if(!devModeOn) {
+            longInput.setVisibility(View.INVISIBLE);
+            latInput.setVisibility(View.INVISIBLE);
+            addCoordinate.setEnabled(false);
+            addCoordinate.setVisibility(View.INVISIBLE);
+        }
+        else {
+            longInput.setVisibility(View.VISIBLE);
+            latInput.setVisibility(View.VISIBLE);
+            addCoordinate.setEnabled(true);
+            addCoordinate.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_CANCELED) {
+                // The user picked a contact.
+                // The Intent's data Uri identifies which contact was selected.
+                // Do something with the contact here (bigger example below)
+                getprefences(findViewById(android.R.id.content));
+                updateDevUI();
+            }
+        }
+    }
+
+
+
+
 }

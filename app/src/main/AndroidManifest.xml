@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-        <activity android:name=".PotholeMap"></activity>
+        <activity android:name=".PotholeMap" />
         <activity android:name=".Activity2" />
         <activity android:name=".MainActivity">
             <intent-filter>

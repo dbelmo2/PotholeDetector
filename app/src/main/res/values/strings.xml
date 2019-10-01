@@ -3,5 +3,32 @@
     <string name="test_string"><b>Your current threshold is 0.00 m/s<sup>2</sup> \n Enter a new threshold in the settings</b>
     </string>
     <string name="unitofmeasurement"> <b>m/s<sup>2</sup></b> </string>
+    <string name="update">update</string>
+    <string name="orientation">Orientation</string>
+    <string name="change_the_pothole_detection_sensitivity">Change the pothole detection sensitivity</string>
+    <string name="threshold">Threshold :</string>
+    <string name="switch_between_hortizontal_and_vertical_phone_orientation">Switch between hortizontal and vertical phone orientation</string>
+    <string name="togglebutton">ToggleButton</string>
+    <string name="clears_all_gps_location_recordings">Clears all gps location recordings</string>
+    <string name="clear">Clear</string>
+    <string name="allows_access_to_dev_tools">Allows access to dev tools</string>
+    <string name="_18">18</string>
+    <string name="developer_mode">Developer Mode</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>

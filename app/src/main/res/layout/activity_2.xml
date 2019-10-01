@@ -1,73 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="62dp"
-        android:text="Enter your desired threshold below:"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#0099FF" />
 
     <EditText
-        android:id="@+id/userInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_marginLeft="-275dp"
-        android:layout_marginBottom="-40dp"
-        android:layout_toRightOf="@+id/textView2"
-        android:background="#CCCCCC"
+        android:id="@+id/thresh_input"
+        android:layout_width="69dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="4dp"
+        android:background="#3F3E3E"
         android:ems="10"
-        android:inputType="textPersonName">
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/enter"
+        app:layout_constraintTop_toBottomOf="@+id/clearButton"
+        tools:layout_conversion_wrapHeight="63"
+        tools:layout_conversion_wrapWidth="560">
 
         <requestFocus />
     </EditText>
 
     <Button
         android:id="@+id/enter"
-        android:layout_width="110dp"
-        android:layout_height="58dp"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="55dp"
+        android:layout_width="69dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/capsule"
         android:backgroundTint="#03A9F4"
-        android:text="update"
-        android:textColor="#FFFFFF" />
+        android:text="@string/update"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clearButton"
+        tools:layout_conversion_wrapHeight="152"
+        tools:layout_conversion_wrapWidth="289" />
 
     <Button
         android:id="@+id/clearButton"
-        android:layout_width="150dp"
-        android:layout_height="58dp"
-        android:layout_below="@+id/enter"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="22dp"
+        android:layout_width="116dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/capsule"
         android:backgroundTint="@android:color/holo_red_dark"
-        android:text="Clear Database" />
+        android:text="@string/clear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_wrapHeight="152"
+        tools:layout_conversion_wrapWidth="394" />
 
     <TextView
         android:id="@+id/thresh_text"
-        android:layout_width="130dp"
-        android:layout_height="43dp"
-        android:layout_above="@+id/clearButton"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginEnd="157dp"
-        android:layout_marginBottom="12dp"
-        android:layout_toEndOf="@+id/enter"
-        android:text="current: 18"
-        android:textSize="15dp" />
+        android:layout_width="81dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/_18"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/update_textview"
+        app:layout_constraintTop_toBottomOf="@+id/clear_description_textview"
+        tools:layout_conversion_wrapHeight="113"
+        tools:layout_conversion_wrapWidth="341" />
+
+    <TextView
+        android:id="@+id/clear_textView"
+        android:layout_width="150dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/clear"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/clear_description_textview"
+        android:layout_width="209dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/clears_all_gps_location_recordings"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clear_textView" />
+
+    <TextView
+        android:id="@+id/update_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/threshold"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clear_description_textview" />
+
+    <TextView
+        android:id="@+id/update_description_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/change_the_pothole_detection_sensitivity"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_textview" />
+
+    <ToggleButton
+        android:id="@+id/orientation_button"
+        android:layout_width="116dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/capsule"
+        android:backgroundTint="#8BC34A"
+        android:textOff="Horizontal"
+        android:textOn="Vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter" />
+
+    <TextView
+        android:id="@+id/orientation_text"
+        android:layout_width="108dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/orientation"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_description_textview"
+        tools:layout_conversion_wrapHeight="113"
+        tools:layout_conversion_wrapWidth="341" />
+
+    <TextView
+        android:id="@+id/orientation_description_text"
+        android:layout_width="271dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="12dp"
+        android:text="@string/switch_between_hortizontal_and_vertical_phone_orientation"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/orientation_button"
+        app:layout_constraintTop_toBottomOf="@+id/orientation_text"
+        tools:layout_conversion_wrapHeight="113"
+        tools:layout_conversion_wrapWidth="341" />
+
+    <ToggleButton
+        android:id="@+id/devmode_button"
+        android:layout_width="116dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/capsule"
+        android:backgroundTint="#DFB12C"
+        android:text="@string/developer_mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orientation_button" />
+
+    <TextView
+        android:id="@+id/devmode_text"
+        android:layout_width="201dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/developer_mode"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orientation_description_text"
+        tools:layout_conversion_wrapHeight="113"
+        tools:layout_conversion_wrapWidth="341" />
+
+    <TextView
+        android:id="@+id/devmode_description_text"
+        android:layout_width="251dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/allows_access_to_dev_tools"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/devmode_text"
+        tools:layout_conversion_wrapHeight="113"
+        tools:layout_conversion_wrapWidth="341" />
 
 
-</RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

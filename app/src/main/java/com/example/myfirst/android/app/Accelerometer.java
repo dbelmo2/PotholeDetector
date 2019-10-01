@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Accelerometer extends AppCompatActivity implements SensorEventListener {
+import java.io.Serializable;
+
+public class Accelerometer extends AppCompatActivity implements SensorEventListener, Serializable {
     private static final String TAG = "MainActivity";
     private float previousZ = 0.0f;
     private SensorManager sensoryManager;
@@ -20,16 +22,14 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
     Context context;
     private boolean potHoleFound = false;
     private float thresh;
+    private boolean verticalModeOn = false;
 
 
-    public Accelerometer(Context context) {
-
-
-
+    public Accelerometer(Context context, Boolean verticalModeOn) {
         this.context = context;
         Log.d(TAG, "onCreate: Initializing Sensor Services");
         this.sensoryManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
-        this. accelerometer = sensoryManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        this.accelerometer = sensoryManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensoryManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         Log.d(TAG, "onCreate: Registered accelerometer listener");
         thresh = 17.0F;
@@ -43,12 +43,17 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        float zAxis = sensorEvent.values[2];
+        float axisValue;
+        if(!verticalModeOn) {
+             axisValue = sensorEvent.values[2]; }
+        else {
+            axisValue = sensorEvent.values[1];
+        }
 
        // Log.d(TAG, "previous Z " + previousZ );
         //Log.d(TAG, "new Z " + zAxis);
 
-        float difference = Math.abs(previousZ - zAxis);
+        float difference = Math.abs(previousZ - axisValue);
 
 
         // function call to compare two float values
@@ -62,12 +67,14 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
             //System.out.println("Just a bump");
             potholeHit = false;
         }
-
-
-        previousZ = zAxis;
+        previousZ = axisValue;
     }
 
 
+    public void setOrientation(boolean verticalModeOn ) {
+
+        this.verticalModeOn = verticalModeOn;
+    }
     public boolean potHoleFound() {
         return potholeHit;
     }
