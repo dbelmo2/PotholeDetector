@@ -35,12 +35,11 @@ public class Search extends Thread {
     Accelerometer accelerometer;
     private boolean potHoleFound = false;
     MediaPlayer mediaPlayer;
-    ArrayList<Coordinate> coordinates;
     static String distanceToPot;
     int distance_int;
     Double distance_double;
     private Context context;
-    PreSearch preSearch;
+    PreSearch preSearch = new PreSearch();
 
 
 
@@ -50,10 +49,8 @@ public class Search extends Thread {
         this.gps = gps;
         this.accelerometer = accelerometer;
         this.mediaPlayer = mediaPlayer;
-        this.coordinates = new ArrayList<>();
         this.context = context;
-        populateArray();
-
+        database.populateArray();
 
 
     }
@@ -63,12 +60,9 @@ public class Search extends Thread {
     public void run() {
 
 
-
-
-
         try {
 
-            //preSearch.start();
+            preSearch.start();
 
             while (true) {
                 // while loop responsible for detecting new potholes
@@ -81,7 +75,7 @@ public class Search extends Thread {
                     pLong = gps.getLongitude();
 
 
-                    coordinates.add(new Coordinate(pLat,pLong));
+                    database.coordinates.add(new Coordinate(pLat,pLong));
                     recordLocation(pLat, pLong);
                     accelerometer.reset();
                     //mediaPlayer.start();
@@ -214,36 +208,14 @@ public class Search extends Thread {
     }
 
     public void addToVector(Coordinate coordinate) {
-        coordinates.add(coordinate);
+        database.coordinates.add(coordinate);
     }
-    public void populateArray() {
-        Cursor cursor = database.getAllData();
-
-        try {
-            if (cursor.moveToFirst()) {
-
-                Coordinate potholeCoordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2));
-                coordinates.add(potholeCoordinate);
-
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-
-    }
-
-
-
 
 
     public class PreSearch extends Thread {
 
         Coordinate current = new Coordinate(0,0);
+
 
 
         public void run() {
@@ -252,27 +224,26 @@ public class Search extends Thread {
                 gps.requestLoc();
                 current.latitude = gps.getLatitude();
                 current.longitude = gps.getLongitude();
-                for (Coordinate c : coordinates) {
+                for (Coordinate c : database.coordinates) {
                     GetJson getJson = new GetJson();
                     distanceToPot = getJson.doInBackground(current, c);
-                    String[] tokens = distanceToPot.split(" ");
+                    if(distanceToPot != null) {
+                        String[] tokens = distanceToPot.split(" ");
 
-                    if (tokens[1] == "km") {
-                        // very far do something here with speed
-                        //
-                        distance_double = Double.parseDouble(tokens[0]);
-                        if (distance_double.compareTo(0.29) <= 0) {
-                            mediaPlayer.start();
+                        if (tokens[1] == "km") {
+                            // very far do something here with speed
+                            //
+                            distance_double = Double.parseDouble(tokens[0]);
+                            if (distance_double.compareTo(0.29) <= 0) {
+                                mediaPlayer.start();
+                            }
+                        } else {
+                            distance_int = Integer.parseInt(tokens[0]);
+                            if (distance_int < 150) {
+                                mediaPlayer.start();
+                            }
                         }
-                    } else {
-                        distance_int = Integer.parseInt(tokens[0]);
-                        if (distance_int < 150) {
-                            mediaPlayer.start();
-                        }
-
-
                     }
-
                 }
             }
 

@@ -9,10 +9,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
+
+    //array list of existing potholes
+    //access needed to update when deletion from db occurs
+    public volatile ArrayList<Coordinate> coordinates;
+
 
     // Database Info
     private static final String DATABASE_NAME = "coordinateDatabase";
@@ -172,11 +178,37 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public void deleteData(int id) {
-
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "  + TABLE_COORDINATES + " WHERE " + KEY_COORDINATE_ID + " = '" + id + "'";
         db.execSQL(query);
+        populateArray();
+    }
 
+    public void receieveArrayList(ArrayList<Coordinate> coordinates) {
+
+        this.coordinates = coordinates;
+
+    }
+
+    public void populateArray() {
+        coordinates = new ArrayList<>();
+        Cursor cursor = this.getAllData();
+
+        try {
+            if (cursor.moveToFirst()) {
+
+                Coordinate potholeCoordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2));
+                this.coordinates.add(potholeCoordinate);
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
 
     }
 }
