@@ -32,7 +32,7 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
         this.accelerometer = sensoryManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensoryManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         Log.d(TAG, "onCreate: Registered accelerometer listener");
-        thresh = 17.0F;
+        thresh = 10.0F;
     }
 
 

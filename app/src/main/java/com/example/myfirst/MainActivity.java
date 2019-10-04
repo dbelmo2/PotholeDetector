@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         mediaPlayer = MediaPlayer.create(this, R.raw.alert);
         orientationSwitch = new Switch(this);
 
-        search = new Search(database, gps, accelerometer, mediaPlayer);
+        search = new Search(database, gps, accelerometer, mediaPlayer,this);
         pulsatorLayout = (PulsatorLayout)findViewById(R.id.pulsator);
         timerSoundPlayer = MediaPlayer.create(this,R.raw.timer_tone);
 
@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 double data1 = Double.valueOf(latInput.getText().toString());
                 double data2 = Double.valueOf(longInput.getText().toString());
                 Coordinate coordinate = new Coordinate(data1,data2);
+                search.addToVector(coordinate);
                 database.addCoordinate(coordinate);
             }
         });
