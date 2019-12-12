@@ -31,6 +31,7 @@ public class Activity2 extends AppCompatActivity implements Serializable {
     DataBaseHelper dataBaseHelper;
     TextView treshText;
     Accelerometer accelerometer;
+    Float thresh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +58,15 @@ public class Activity2 extends AppCompatActivity implements Serializable {
 
             @Override
             public void onClick(View v) {
+                // update the threshold
+                SharedPreferences sharedPreferences = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
                 String thresholdStr = userInput.getText().toString();
                 Float threshold = Float.valueOf(thresholdStr);
-                Intent intent = new Intent(Activity2.this, MainActivity.class);
-                intent.putExtra("newThreshold", threshold);
-                treshText.setText("current: " + threshold);
-                startActivity(intent);
+                editor.putFloat("thresh", threshold);
+                editor.apply();
+                String thresh = Float.toString(threshold);
+                treshText.setText(thresh);
             }
         });
 
@@ -144,6 +148,7 @@ public class Activity2 extends AppCompatActivity implements Serializable {
 
         verticalModeOn = sharedPreferences.getBoolean("verticalmode", false);
         devModeOn = sharedPreferences.getBoolean("devmode", false);
+        thresh = sharedPreferences.getFloat("thresh", 18);
 
     }
 

@@ -18,6 +18,11 @@ public class Coordinate {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+    public Coordinate(Coordinate c) {
+        this.id = c.id;
+        this.longitude = c.longitude;
+        this.latitude = c.latitude;
+    }
 
     public int getId() {
         return this.id;

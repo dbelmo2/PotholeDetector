@@ -27,6 +27,9 @@ import java.util.Vector;
 
 import static android.content.ContentValues.TAG;
 
+/* TO DO
+FIX asyncrhonous bug : accessing arraylist from preSearch thread and main thread causes a crash
+ */
 
 public class Search extends Thread {
     private double pLat, pLong;
@@ -136,7 +139,7 @@ public class Search extends Thread {
 
             String output = "";
             StringBuffer stringBuffer = new StringBuffer();
-            API_KEY = "AIzaSyBXjgNadBQByJoQ1gUYjLBwkffObu4Sm6I";
+            API_KEY = "AIzaSyBXKa025y69ZY6Uj3vCMD_JEe7Nqx5o7hI";
 
 
             try {
@@ -213,32 +216,44 @@ public class Search extends Thread {
 
 
     public class PreSearch extends Thread {
-
         Coordinate current = new Coordinate(0,0);
-
-
+        ArrayList<Coordinate> cList;
 
         public void run() {
 
             while (true) {
+                if(database.isDataChanged()) {
+                    // TODO
+                    // check if the database has been updated
+                    // if true -> retrieve a new array list containing the updated data
+                    cList = database.getCoordinatesList();
+                    database.resetDataChanged();
+                }
+
+
                 gps.requestLoc();
                 current.latitude = gps.getLatitude();
                 current.longitude = gps.getLongitude();
-                for (Coordinate c : database.coordinates) {
+                for (Coordinate c : cList) {
                     GetJson getJson = new GetJson();
                     distanceToPot = getJson.doInBackground(current, c);
                     if(distanceToPot != null) {
                         String[] tokens = distanceToPot.split(" ");
 
                         if (tokens[1] == "km") {
-                            // very far do something here with speed
-                            //
+                            // very far
+                            // do something here with speed
                             distance_double = Double.parseDouble(tokens[0]);
                             if (distance_double.compareTo(0.29) <= 0) {
                                 mediaPlayer.start();
                             }
                         } else {
-                            distance_int = Integer.parseInt(tokens[0]);
+                            try {
+                            distance_int = Integer.parseInt(tokens[0]); }
+                            catch(Exception E) {
+                                E.printStackTrace();
+                                System.out.println("distance: " + tokens);
+                            }
                             if (distance_int < 150) {
                                 mediaPlayer.start();
                             }

@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private PulsatorLayout pulsatorLayout;
     private CountDownTimer countDownTimer;
     private Location mLocation;
+    private Float thresh;
     private FusedLocationProviderClient fusedProvider;
     private Boolean devModeOn,verticalModeOn, timerRunning;
 
@@ -143,23 +144,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         // setting up the location manager
         viewAll();
 
-        // Check for threshold change
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                //do nothing
-            } else {
-                float temp = extras.getFloat("newThreshold");
-                accelerometer.setTresh(temp);
 
-            }
-        } else {
-            if(savedInstanceState.getSerializable("newThreshold") != null) {
-                float temp = (Float) savedInstanceState.getSerializable("newThreshold");
-                accelerometer.setTresh(temp);
-
-            }
-        }
+        accelerometer.setTresh(thresh);
         //update dev gui and accelerometer setting based on shared pref
         updateDevUI();
     }
@@ -237,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         verticalModeOn = sharedPreferences.getBoolean("verticalmode", false);
         devModeOn = sharedPreferences.getBoolean("devmode", false);
+        thresh = sharedPreferences.getFloat("thresh", 18);
 
     }
     public void updateDevUI() {
