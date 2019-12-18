@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String KEY_LONGITUDE = "longitude";
 
     private static DataBaseHelper sInstance;
-
+    private boolean dataChanged;
     public static synchronized DataBaseHelper getInstance(Context context) {
         // Using application context to ensure no memory leaks
         if (sInstance == null) {
@@ -70,6 +71,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 KEY_LONGITUDE + " REAL " +
                 ");";
         db.execSQL(CREATE_COORDINATE_TABLE);
+        dataChanged = false;
+
     }
 
     /*
@@ -90,6 +93,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     // Insert a coordinate into the database
     public void addCoordinate(Coordinate coordinate) {
+        // set the data change flag, indicating that the database has been updated.
+        dataChanged = true;
         // Create and/or open the database for writing
         SQLiteDatabase db = getWritableDatabase();
 
@@ -178,6 +183,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public void deleteData(int id) {
+        dataChanged = true;
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "  + TABLE_COORDINATES + " WHERE " + KEY_COORDINATE_ID + " = '" + id + "'";
         db.execSQL(query);
@@ -191,8 +197,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public void populateArray() {
-        coordinates = new ArrayList<>();
         Cursor cursor = this.getAllData();
+        int numRows = cursor.getCount();
+        coordinates = new ArrayList<Coordinate>();
+
 
         try {
             if (cursor.moveToFirst()) {
@@ -210,5 +218,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
         }
 
+    }
+
+    // getter method for datachanged flag.
+    public boolean isDataChanged() {
+        return dataChanged;
+    }
+
+    // returns an ArrayList<Coordinate> containing the pothole coordinates stored in the database.
+    public ArrayList<Coordinate> getCoordinatesList() {
+        Cursor cursor = this.getAllData();
+        ArrayList<Coordinate> myList = new ArrayList<>();
+
+        try{
+            if(cursor.moveToFirst()) {
+                Coordinate potholeCoordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2));
+                myList.add(potholeCoordinate);
+
+            }
+        }catch (Exception E) {
+            E.printStackTrace();
+        }
+
+    return myList;
+    }
+
+
+    // reset the data changed flag
+    // indicating we have the most up to date version of the database
+    public void resetDataChanged() {
+        dataChanged = false;
     }
 }
