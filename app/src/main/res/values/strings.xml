@@ -2,6 +2,9 @@
     <string name="app_name">myFirst</string>
     <string name="test_string"><b>Your current threshold is 0.00 m/s<sup>2</sup> \n Enter a new threshold in the settings</b>
     </string>
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">iPRI1nWkRQs21nl2qgsEbE9Mc1bdHt8k77IuTzu3</string>
+    <string name="back4app_client_key">JW747Q6IRYIzPsFyUuVeS2nhdcsCiAZJSuGGRNXz</string>
     <string name="unitofmeasurement"> <b>m/s<sup>2</sup></b> </string>
     <string name="update">update</string>
     <string name="orientation">Orientation</string>

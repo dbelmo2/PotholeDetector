@@ -49,8 +49,6 @@ public class Activity2 extends AppCompatActivity implements Serializable {
         orientation = findViewById(R.id.orientation_button);
         devmode = findViewById(R.id.devmode_button);
 
-
-
         dataBaseHelper = new DataBaseHelper(this);
         final EditText userInput = (EditText) findViewById(R.id.thresh_input);
         enter.setOnClickListener(new View.OnClickListener() {
