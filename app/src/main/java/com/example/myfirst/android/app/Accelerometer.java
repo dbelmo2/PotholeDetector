@@ -75,15 +75,15 @@ public class Accelerometer extends AppCompatActivity implements SensorEventListe
 
         this.verticalModeOn = verticalModeOn;
     }
-    public boolean potHoleFound() {
+    public synchronized boolean potHoleFound() {
         return potholeHit;
     }
     public void setPotholeFound(boolean found) {potholeHit = found;}
-    public void reset() {
+    public synchronized void reset() {
         potholeHit = false;
     }
 
-    public void setTresh(float thresh) {
+    public synchronized void setTresh(float thresh) {
         this.thresh =  thresh;
     }
     public float getThresh() { return thresh; }

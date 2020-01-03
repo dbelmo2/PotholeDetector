@@ -89,11 +89,11 @@ public class GPS {
 
     }
 
-    public double getLatitude() {
+    public synchronized double getLatitude() {
         return latitude;
 
     }
-    public double getLongitude() {
+    public synchronized double getLongitude() {
         return longitude;
     }
 

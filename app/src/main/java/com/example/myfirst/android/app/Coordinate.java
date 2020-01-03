@@ -24,7 +24,7 @@ public class Coordinate {
         this.latitude = c.latitude;
     }
 
-    public int getId() {
+    public synchronized int getId() {
         return this.id;
     }
 }

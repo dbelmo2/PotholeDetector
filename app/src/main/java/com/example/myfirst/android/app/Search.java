@@ -96,7 +96,7 @@ public class Search extends Thread {
     }
 
     // function which returns true if both coordinates were successfully recorded
-    private void recordLocation(double lat, double lon) {
+    private synchronized void recordLocation(double lat, double lon) {
         Coordinate coordinate = new Coordinate(lat, lon);
         database.addCoordinate(coordinate);
     }
@@ -118,7 +118,7 @@ public class Search extends Thread {
         String API_KEY;
 
 
-        public String doInBackground(Coordinate c1, Coordinate c2) {
+        public synchronized String doInBackground(Coordinate c1, Coordinate c2) {
             current = c1;
             pothole = c2;
 
@@ -135,7 +135,7 @@ public class Search extends Thread {
 
 
 
-        private String getJasonFromAPI() {
+        private synchronized String getJasonFromAPI() {
 
             String output = "";
             StringBuffer stringBuffer = new StringBuffer();
@@ -210,7 +210,7 @@ public class Search extends Thread {
 
     }
 
-    public void addToVector(Coordinate coordinate) {
+    public synchronized void addToVector(Coordinate coordinate) {
         database.coordinates.add(coordinate);
     }
 
