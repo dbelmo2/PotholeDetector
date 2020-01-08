@@ -212,10 +212,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 }
         );
     }
-
+ 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-       //TODO fix crash
+        gps.onResults(requestCode, permissions, grantResults);
     }
 
     public void getprefences(View view) {

@@ -57,13 +57,14 @@ public class GPS {
                     Manifest.permission.INTERNET
 
             },10 );
-            return;
-        }else {
+
+
+        }
             buildLocationCallback();
             buildLocationRequest();
 
 
-        }
+
 
     }
 
@@ -71,7 +72,7 @@ public class GPS {
         switch(requestCode) {
             case 10:
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    requestLoc();
+                    System.out.println("gps.onResults() called \n");
                 }
         }
 
