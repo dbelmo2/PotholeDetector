@@ -217,7 +217,7 @@ public class Search extends Thread {
 
     public class PreSearch extends Thread {
         Coordinate current = new Coordinate(0,0);
-        ArrayList<Coordinate> cList;
+        ArrayList<Coordinate> cList = new ArrayList<>();
 
         public void run() {
 
