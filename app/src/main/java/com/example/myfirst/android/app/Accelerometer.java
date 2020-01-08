@@ -13,7 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
 
-public class Accelerometer extends AppCompatActivity implements SensorEventListener, Serializable {
+public class
+Accelerometer extends AppCompatActivity implements SensorEventListener, Serializable {
     private static final String TAG = "MainActivity";
     private float previousZ = 0.0f;
     private SensorManager sensoryManager;

@@ -44,13 +44,12 @@ public class Activity2 extends AppCompatActivity implements Serializable {
         treshText.setText("current: " + extras.getFloat("accelerometerValue"));
         Intent intent = this.getIntent();
         accelerometer = (Accelerometer)intent.getExtras().getSerializable("accelerometer");
+        thresh = extras.getFloat("accelerometerValue");
         }
 
         clear = findViewById(R.id.clearButton);
         orientation = findViewById(R.id.orientation_button);
         devmode = findViewById(R.id.devmode_button);
-
-
 
         dataBaseHelper = new DataBaseHelper(this);
         final EditText userInput = (EditText) findViewById(R.id.thresh_input);

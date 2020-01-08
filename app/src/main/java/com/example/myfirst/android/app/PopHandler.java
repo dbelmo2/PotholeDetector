@@ -29,7 +29,6 @@ public class PopHandler implements PopupMenu.OnMenuItemClickListener {
         this.id = id;
         deleted = false;
         this.callback = callback;
-
     }
 
     public void showPopup() {

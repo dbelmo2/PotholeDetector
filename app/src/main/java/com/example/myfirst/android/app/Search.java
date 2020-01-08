@@ -55,7 +55,6 @@ public class Search extends Thread {
         this.context = context;
         database.populateArray();
 
-
     }
 
     /*main Search thread, continuously checks if
@@ -78,7 +77,7 @@ public class Search extends Thread {
                     pLong = gps.getLongitude();
 
 
-                    database.coordinates.add(new Coordinate(pLat,pLong));
+                    DataBaseHelper.coordinates.add(new Coordinate(pLat,pLong));
                     recordLocation(pLat, pLong);
                     accelerometer.reset();
                     //mediaPlayer.start();

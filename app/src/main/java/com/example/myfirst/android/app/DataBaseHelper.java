@@ -18,7 +18,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //array list of existing potholes
     //access needed to update when deletion from db occurs
-    public volatile ArrayList<Coordinate> coordinates;
+    static volatile ArrayList<Coordinate> coordinates;
 
 
     // Database Info
@@ -199,7 +199,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void populateArray() {
         Cursor cursor = this.getAllData();
         int numRows = cursor.getCount();
-        coordinates = new ArrayList<Coordinate>();
+        this.coordinates = new ArrayList<Coordinate>();
 
 
         try {
@@ -220,7 +220,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    // getter method for datachanged flag.
+    // getter method for data changed flag.
     public boolean isDataChanged() {
         return dataChanged;
     }
