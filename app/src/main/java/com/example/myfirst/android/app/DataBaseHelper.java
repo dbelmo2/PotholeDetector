@@ -18,7 +18,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //array list of existing potholes
     //access needed to update when deletion from db occurs
-    static volatile ArrayList<Coordinate> coordinates;
+    public volatile ArrayList<Coordinate> coordinates;
 
 
     // Database Info
