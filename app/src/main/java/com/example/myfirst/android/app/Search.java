@@ -37,7 +37,7 @@ public class Search extends Thread {
     GPS gps;
     Accelerometer accelerometer;
     private boolean potHoleFound = false;
-    MediaPlayer mediaPlayer;
+    static MediaPlayer mediaPlayer;
     static String distanceToPot;
     int distance_int;
     Double distance_double;

@@ -184,6 +184,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public void deleteData(int id) {
         dataChanged = true;
+        Search.mediaPlayer.stop();
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "  + TABLE_COORDINATES + " WHERE " + KEY_COORDINATE_ID + " = '" + id + "'";
         db.execSQL(query);
