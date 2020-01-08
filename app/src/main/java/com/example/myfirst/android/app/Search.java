@@ -71,6 +71,7 @@ public class Search extends Thread {
 
 
                 if (accelerometer.potHoleFound()) {
+
                     gps.requestLoc();
 
                     pLat = gps.getLatitude();
@@ -221,12 +222,17 @@ public class Search extends Thread {
         public void run() {
 
             while (true) {
-                if(database.isDataChanged()) {
-                    // TODO
-                    // check if the database has been updated
-                    // if true -> retrieve a new array list containing the updated data
-                    cList = database.getCoordinatesList();
-                    database.resetDataChanged();
+                if(database != null) {
+                    if(database.isDataChanged()) {
+                        // TODO
+                        // check if the database has been updated
+                        // if true -> retrieve a new array list containing the updated data
+                        cList = database.getCoordinatesList();
+                        database.resetDataChanged();
+                    }
+                }
+                else {
+                    continue;
                 }
 
 
