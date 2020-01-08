@@ -33,8 +33,6 @@ public class ListDataActivity extends AppCompatActivity implements CallBack{
         dataBaseHelper = new DataBaseHelper(this);
         fillList(dataBaseHelper.getAllData());
 
-
-
     }
 
     private void fillList(Cursor mCursor) {

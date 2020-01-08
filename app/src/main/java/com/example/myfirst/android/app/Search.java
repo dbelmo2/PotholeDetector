@@ -27,10 +27,6 @@ import java.util.Vector;
 
 import static android.content.ContentValues.TAG;
 
-/* TO DO
-FIX asyncrhonous bug : accessing arraylist from preSearch thread and main thread causes a crash
- */
-
 public class Search extends Thread {
     private double pLat, pLong;
     private DataBaseHelper database;
@@ -81,7 +77,6 @@ public class Search extends Thread {
                     database.coordinates.add(new Coordinate(pLat,pLong));
                     recordLocation(pLat, pLong);
                     accelerometer.reset();
-                    //mediaPlayer.start();
                     sleep(5000);
 
                 }
@@ -100,14 +95,6 @@ public class Search extends Thread {
         Coordinate coordinate = new Coordinate(lat, lon);
         database.addCoordinate(coordinate);
     }
-
-
-
-
-    public void setPotHoleFound(boolean state) {
-        this.potHoleFound = state;
-    }
-
 
 
     public class GetJson  {
@@ -189,13 +176,6 @@ public class Search extends Thread {
                 String distance = jsonObject.get("text").toString();
                 distanceValue = distance;
 
-                /*if (distance.contains("km")) {
-                    distanceValue = Double.parseDouble(distance.replace("mi", ""));
-
-                } else {
-                    distanceValue = Double.parseDouble("0." + distance.replace("ft", ""));
-                } */
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -225,9 +205,6 @@ public class Search extends Thread {
                 if(database != null) {
                     cList = database.getCoordinatesList();
                     if(database.isDataChanged()) {
-                        // TODO
-                        // check if the database has been updated
-                        // if true -> retrieve a new array list containing the updated data
                         cList = database.getCoordinatesList();
                         database.resetDataChanged();
                     }
@@ -251,7 +228,7 @@ public class Search extends Thread {
                             // do something here with speed
                             distance_double = Double.parseDouble(tokens[0]);
                             if (distance_double.compareTo(0.29) <= 0) {
-                                mediaPlayer.start();
+                                Search.mediaPlayer.start();
                             }
                         } else {
                             try {
@@ -261,7 +238,7 @@ public class Search extends Thread {
                                 System.out.println("distance: " + tokens);
                             }
                             if (distance_int < 150) {
-                                mediaPlayer.start();
+                                Search.mediaPlayer.start();
                             }
                         }
                     }

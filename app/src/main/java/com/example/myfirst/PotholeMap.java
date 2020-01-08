@@ -102,7 +102,6 @@ public class PotholeMap extends AppCompatActivity
     // Callback called when map is ready to be displayed
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "onMapReady()");
         map = googleMap;
         map.setOnMapClickListener(this);
         map.setOnMarkerClickListener(this);
@@ -111,7 +110,6 @@ public class PotholeMap extends AppCompatActivity
     // Callback called when Map is touched
     @Override
     public void onMapClick(LatLng latLng) {
-        Log.d(TAG, "onMapClick("+latLng +")");
         markerForGeofence(latLng);
         startGeofence();
     }
@@ -162,7 +160,6 @@ public class PotholeMap extends AppCompatActivity
     //Callback when marker is touched
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Log.d(TAG, "onMarkerClickListener: " + marker.getPosition());
         return false;
     }
 
@@ -172,7 +169,6 @@ public class PotholeMap extends AppCompatActivity
 
     // This method is used to initiate the entry point for Googles Apis
     private void createGoogleApi() {
-        Log.d(TAG, "createGoogleApi()");
         if(googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder( this )
                     .addConnectionCallbacks( this )
@@ -218,7 +214,6 @@ public class PotholeMap extends AppCompatActivity
 
     // Get last known location
     private void getLastKnownLocation() {
-        Log.d(TAG, "getLastKnownLocation()");
         if ( checkPermission() ) {
             lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if ( lastLocation != null ) {
@@ -255,7 +250,6 @@ public class PotholeMap extends AppCompatActivity
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(TAG, "onLocationChanged ["+location+"]");
         lastLocation = location;
         writeActualLocation(location);
     }
@@ -272,7 +266,6 @@ public class PotholeMap extends AppCompatActivity
 
     // Check for permission to access Location
     private boolean checkPermission() {
-        Log.d(TAG, "checkPermission()");
         // Ask for permission if it wasn't granted yet
         return (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED );
@@ -282,7 +275,7 @@ public class PotholeMap extends AppCompatActivity
 
     // Asks for permission
     private void askPermission() {
-        Log.d(TAG, "askPermission()");
+
         ActivityCompat.requestPermissions(
                 this,
                 new String[] { Manifest.permission.ACCESS_FINE_LOCATION } ,
@@ -292,7 +285,6 @@ public class PotholeMap extends AppCompatActivity
     // Verify user's response of the permission requested
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult()");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch ( requestCode ) {
             case REQ_PERMISSION: {
@@ -325,7 +317,7 @@ public class PotholeMap extends AppCompatActivity
 
     // Create a Geofence
     private Geofence createGeofence( LatLng latLng, float radius ) {
-        Log.d(TAG, "createGeofence");
+
         return new Geofence.Builder()
                 .setRequestId(GEOFENCE_REQ_ID)
                 .setCircularRegion( latLng.latitude, latLng.longitude, radius)
@@ -337,7 +329,6 @@ public class PotholeMap extends AppCompatActivity
 
     // Create a Geofence Request
     private GeofencingRequest createGeofenceRequest( Geofence geofence ) {
-        Log.d(TAG, "createGeofenceRequest");
         return new GeofencingRequest.Builder()
                 .setInitialTrigger( GeofencingRequest.INITIAL_TRIGGER_ENTER )
                 .addGeofence( geofence )
@@ -347,7 +338,6 @@ public class PotholeMap extends AppCompatActivity
     private PendingIntent geoFencePendingIntent;
     private final int GEOFENCE_REQ_CODE = 0;
     private PendingIntent createGeofencePendingIntent() {
-        Log.d(TAG, "createGeofencePendingIntent");
         if ( geoFencePendingIntent != null )
             return geoFencePendingIntent;
 
@@ -358,7 +348,6 @@ public class PotholeMap extends AppCompatActivity
 
     // Add the created GeofenceRequest to the device's monitoring list
     private void addGeofence(GeofencingRequest request) {
-        Log.d(TAG, "addGeofence");
         if (checkPermission())
             LocationServices.GeofencingApi.addGeofences(
                     googleApiClient,
@@ -380,7 +369,6 @@ public class PotholeMap extends AppCompatActivity
     // Draw Geofence circle on GoogleMap
     private Circle geoFenceLimits;
     private void drawGeofence() {
-        Log.d(TAG, "drawGeofence()");
 
         if ( geoFenceLimits != null )
             geoFenceLimits.remove();

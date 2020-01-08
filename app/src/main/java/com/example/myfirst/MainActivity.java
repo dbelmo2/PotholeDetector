@@ -154,9 +154,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     public void openSettingsActivity() {
         Intent intent = new Intent(this, Activity2.class);
-        //Bundle bundle = new Bundle();
-        //bundle.putSerializable("accelerometer",(Serializable)accelerometer);
-       // intent.putExtras();
         startActivityForResult(intent,1);
     }
 

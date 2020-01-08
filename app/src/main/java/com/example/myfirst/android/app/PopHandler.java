@@ -54,25 +54,5 @@ public class PopHandler implements PopupMenu.OnMenuItemClickListener {
         }
     }
 
-
-
-    public boolean getDeleted() {
-        return deleted;
-    }
-    public void setDeleted(boolean bool) {
-        this.deleted = bool;
-    }
-
-    interface Callback {
-
-
-    }
-
-
-
-
-
-
-
 }
 

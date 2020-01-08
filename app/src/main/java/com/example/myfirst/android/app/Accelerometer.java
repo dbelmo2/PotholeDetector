@@ -28,14 +28,11 @@ Accelerometer extends AppCompatActivity implements SensorEventListener, Serializ
 
     public Accelerometer(Context context, Boolean verticalModeOn) {
         this.context = context;
-        Log.d(TAG, "onCreate: Initializing Sensor Services");
         this.sensoryManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         this.accelerometer = sensoryManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensoryManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        Log.d(TAG, "onCreate: Registered accelerometer listener");
         thresh = 10.0F;
     }
-
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
@@ -51,16 +48,11 @@ Accelerometer extends AppCompatActivity implements SensorEventListener, Serializ
             axisValue = sensorEvent.values[1];
         }
 
-       // Log.d(TAG, "previous Z " + previousZ );
-        //Log.d(TAG, "new Z " + zAxis);
-
         float difference = Math.abs(previousZ - axisValue);
 
 
         // function call to compare two float values
         if (Float.compare(difference, thresh) >= 0) {
-
-            System.out.println("pothole hit");
             potholeHit = true;
         }
         else if (Float.compare(difference, thresh) < 0) {
@@ -71,7 +63,6 @@ Accelerometer extends AppCompatActivity implements SensorEventListener, Serializ
         previousZ = axisValue;
     }
 
-
     public void setOrientation(boolean verticalModeOn ) {
 
         this.verticalModeOn = verticalModeOn;
@@ -79,13 +70,10 @@ Accelerometer extends AppCompatActivity implements SensorEventListener, Serializ
     public synchronized boolean potHoleFound() {
         return potholeHit;
     }
-    public void setPotholeFound(boolean found) {potholeHit = found;}
     public synchronized void reset() {
         potholeHit = false;
     }
-
     public synchronized void setTresh(float thresh) {
         this.thresh =  thresh;
     }
-    public float getThresh() { return thresh; }
 }
