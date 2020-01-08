@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        gps.onResults(requestCode, permissions, grantResults);
+       //TODO fix crash
     }
 
     public void getprefences(View view) {

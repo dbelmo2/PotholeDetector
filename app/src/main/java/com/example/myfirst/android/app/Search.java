@@ -217,12 +217,13 @@ public class Search extends Thread {
 
     public class PreSearch extends Thread {
         Coordinate current = new Coordinate(0,0);
-        ArrayList<Coordinate> cList = new ArrayList<>();
+        ArrayList<Coordinate> cList;
 
         public void run() {
 
             while (true) {
                 if(database != null) {
+                    cList = database.getCoordinatesList();
                     if(database.isDataChanged()) {
                         // TODO
                         // check if the database has been updated
