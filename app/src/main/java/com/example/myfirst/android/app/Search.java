@@ -77,7 +77,7 @@ public class Search extends Thread {
                     pLong = gps.getLongitude();
 
 
-                    DataBaseHelper.coordinates.add(new Coordinate(pLat,pLong));
+                    database.coordinates.add(new Coordinate(pLat,pLong));
                     recordLocation(pLat, pLong);
                     accelerometer.reset();
                     //mediaPlayer.start();
