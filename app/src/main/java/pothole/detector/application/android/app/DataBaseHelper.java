@@ -1,4 +1,4 @@
-package com.example.myfirst.android.app;
+package pothole.detector.application.android.app;
 
 
 import android.content.ContentValues;
@@ -7,9 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import java.util.concurrent.ArrayBlockingQueue;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;

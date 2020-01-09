@@ -1,16 +1,7 @@
-package com.example.myfirst.android.app;
+package pothole.detector.application.android.app;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.location.Location;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
-import android.telecom.Call;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.myfirst.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,10 +13,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Vector;
-
-
-import static android.content.ContentValues.TAG;
 
 public class Search extends Thread {
     private double pLat, pLong;

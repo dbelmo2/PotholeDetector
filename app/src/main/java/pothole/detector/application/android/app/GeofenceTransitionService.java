@@ -1,4 +1,4 @@
-package com.example.myfirst.android.app;
+package pothole.detector.application.android.app;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -13,9 +13,9 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.myfirst.MainActivity;
-import com.example.myfirst.PotholeMap;
-import com.example.myfirst.R;
+import pothole.detector.application.MainActivity;
+import pothole.detector.application.PotholeMap;
+
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;

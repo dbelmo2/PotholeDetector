@@ -1,4 +1,4 @@
-package com.example.myfirst;
+package pothole.detector.application;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,13 +13,14 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myfirst.android.app.Accelerometer;
-import com.example.myfirst.android.app.DataBaseHelper;
+import com.example.myfirst.R;
+
+import pothole.detector.application.android.app.Accelerometer;
+import pothole.detector.application.android.app.DataBaseHelper;
 
 import java.io.Serializable;
 

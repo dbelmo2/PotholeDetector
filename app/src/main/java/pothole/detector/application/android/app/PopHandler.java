@@ -1,16 +1,11 @@
-package com.example.myfirst.android.app;
+package pothole.detector.application.android.app;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
-import android.widget.Switch;
 
-import com.example.myfirst.MainActivity;
 import com.example.myfirst.R;
-
-import java.util.ArrayList;
 
 public class PopHandler implements PopupMenu.OnMenuItemClickListener {
 

@@ -1,4 +1,4 @@
-package com.example.myfirst.android.app;
+package pothole.detector.application.android.app;
 
 public class Coordinate {
 

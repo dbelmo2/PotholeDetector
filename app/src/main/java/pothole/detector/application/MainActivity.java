@@ -1,44 +1,36 @@
-package com.example.myfirst;
+package pothole.detector.application;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
 
-import android.text.Html;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.QuickContactBadge;
-import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.view.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myfirst.android.app.Accelerometer;
-import com.example.myfirst.android.app.Coordinate;
-import com.example.myfirst.android.app.DataBaseHelper;
-import com.example.myfirst.android.app.GPS;
-import com.example.myfirst.android.app.ListDataActivity;
-import com.example.myfirst.android.app.Search;
+import com.example.myfirst.R;
+
+import pothole.detector.application.android.app.Accelerometer;
+import pothole.detector.application.android.app.Coordinate;
+import pothole.detector.application.android.app.DataBaseHelper;
+import pothole.detector.application.android.app.GPS;
+import pothole.detector.application.android.app.ListDataActivity;
+import pothole.detector.application.android.app.Search;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package com.example.myfirst;
+package pothole.detector.application;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,13 +15,11 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.myfirst.android.app.GPS;
-import com.example.myfirst.android.app.GeofenceTransitionService;
+import com.example.myfirst.R;
+
+import pothole.detector.application.android.app.GeofenceTransitionService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;

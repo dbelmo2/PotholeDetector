@@ -1,4 +1,4 @@
-package com.example.myfirst;
+package pothole.detector.application;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

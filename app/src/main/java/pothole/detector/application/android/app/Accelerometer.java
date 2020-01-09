@@ -1,14 +1,11 @@
-package com.example.myfirst.android.app;
+package pothole.detector.application.android.app;
 
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
-import android.os.Bundle;
 
-import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;

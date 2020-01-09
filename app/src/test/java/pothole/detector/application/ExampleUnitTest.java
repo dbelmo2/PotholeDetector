@@ -1,4 +1,4 @@
-package com.example.myfirst;
+package pothole.detector.application;
 
 import org.junit.Test;
 
