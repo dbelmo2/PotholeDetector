@@ -5,7 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
-import com.example.myfirst.R;
+import pothole.detector.application.R;
 
 public class PopHandler implements PopupMenu.OnMenuItemClickListener {
 

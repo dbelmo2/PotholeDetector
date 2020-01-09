@@ -22,7 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myfirst.R;
+import pothole.detector.application.R;
 
 import pothole.detector.application.android.app.Accelerometer;
 import pothole.detector.application.android.app.Coordinate;

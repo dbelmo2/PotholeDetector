@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.myfirst.R;
+import pothole.detector.application.R;
 
 import pothole.detector.application.android.app.GeofenceTransitionService;
 import com.google.android.gms.common.ConnectionResult;
