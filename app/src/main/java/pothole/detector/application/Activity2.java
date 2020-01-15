@@ -41,11 +41,10 @@ public class Activity2 extends AppCompatActivity implements Serializable {
         Bundle extras = getIntent().getExtras();
         Button enter = findViewById(R.id.enter);
         treshText = findViewById(R.id.thresh_text);
+        thresh = 18.0F;
         if(extras !=  null) {
-        treshText.setText("current: " + extras.getFloat("accelerometerValue"));
         Intent intent = this.getIntent();
         accelerometer = (Accelerometer)intent.getExtras().getSerializable("accelerometer");
-        thresh = extras.getFloat("accelerometerValue");
         }
 
         clear = findViewById(R.id.clearButton);
@@ -62,6 +61,9 @@ public class Activity2 extends AppCompatActivity implements Serializable {
                 SharedPreferences sharedPreferences = getSharedPreferences("appSettings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 String thresholdStr = userInput.getText().toString();
+                if(thresholdStr.isEmpty()) {
+                    thresholdStr = "17";
+                }
                 Float threshold = Float.valueOf(thresholdStr);
                 editor.putFloat("thresh", threshold);
                 editor.apply();
@@ -106,6 +108,8 @@ public class Activity2 extends AppCompatActivity implements Serializable {
             }
         });
         getprefences(findViewById(android.R.id.content));
+        String thresh_string = Float.toString(thresh);
+        treshText.setText(thresh_string);
         updateButtons();
 
 

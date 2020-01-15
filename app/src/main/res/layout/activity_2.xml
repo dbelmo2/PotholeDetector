@@ -123,7 +123,7 @@
 
     <TextView
         android:id="@+id/orientation_text"
-        android:layout_width="108dp"
+        android:layout_width="128dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
@@ -137,7 +137,7 @@
     <TextView
         android:id="@+id/orientation_description_text"
         android:layout_width="271dp"
-        android:layout_height="29dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="12dp"
         android:text="@string/switch_between_hortizontal_and_vertical_phone_orientation"
         android:textSize="12sp"
@@ -163,7 +163,7 @@
         android:layout_width="201dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:text="@string/developer_mode"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
